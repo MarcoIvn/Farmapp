@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import InicioScreenU from './screens/InicioScreenU.js';
+import InicioScreenF from './screens/InicioScreenF.js';
+import LoginScreenU from './screens/LoginScreenU.js';
+import RegistroScreenU from './screens/RegisterScreenU.js';
+import LoginScreenF from './screens/LoginScreenF.js';
+import RegistroScreenF from './screens/RegisterScreenF.js';
 
-export default function App() {
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="InicioU" component={InicioScreenU} />
+        <Stack.Screen name="InicioF" component={InicioScreenF} />
+        <Stack.Screen name="LoginU" component={LoginScreenU} />
+        <Stack.Screen name="RegistroU" component={RegistroScreenU} />
+        <Stack.Screen name="LoginF" component={LoginScreenF} />
+        <Stack.Screen name="RegistroF" component={RegistroScreenF} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
