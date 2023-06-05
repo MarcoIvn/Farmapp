@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert, } from 'react-native';
 
 const CountryCodeModal = ({ isVisible, onSelectCode }) => {
   const countryCodes = [
@@ -7,7 +7,7 @@ const CountryCodeModal = ({ isVisible, onSelectCode }) => {
     { id: 2, code: '1', flag: '🇺🇸', country: 'EE. UU.' },
     { id: 3, code: '54', flag: '🇦🇷', country: 'Argentina' },
     { id: 4, code: '56', flag: '🇨🇱', country: 'Chile' },
-    { id: 5, code: '57', flag: '🇨🇴', country: 'Colombia' },
+    { id: 5, code: '57', flag: '🇨🇴', country: 'Colombia' }, 
     { id: 6, code: '58', flag: '🇻🇪', country: 'Venezuela' },
     { id: 7, code: '51', flag: '🇵🇪', country: 'Perú' },
     { id: 8, code: '55', flag: '🇧🇷', country: 'Brasil' },
@@ -278,5 +278,7 @@ const RegisterScreenU = () => {
     </KeyboardAvoidingView>
   );
 };
+
+
 
 export default RegisterScreenU;
