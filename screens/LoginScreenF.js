@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Image } from 'react-native';
 
-const LoginScreenF = () => {
+
+const LoginScreenF = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Aquí puedes agregar la lógica para manejar la autenticación del usuario
+    
+    navigation.navigate('MainMenuF');
   };
 
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
       <TextInput
         style={styles.input}
         placeholder="Correo electrónico"
@@ -47,6 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   logoImage: {
+    
     width: 200,
     height: 200,
     marginBottom: 20,

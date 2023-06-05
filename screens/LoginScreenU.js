@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Image } from 'react-native';
 
-const LoginScreenF = () => {
+
+const LoginScreenF = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     // Aquí puedes agregar la lógica para manejar la autenticación del usuario
+    
+    navigation.navigate('MainMenuU');
   };
 
   return (
