@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 
-const FarmaScreenU = ({ navigation }) => {
+const CarritoScreenU = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
@@ -14,44 +14,29 @@ const FarmaScreenU = ({ navigation }) => {
         </View>
       </TouchableOpacity>
 
-
       <View style={styles.contentContainer}>
-      <Image style={styles.itemImager} source={require('../assets/farmacia1.png')} />    
-      <Text style={styles.title}>Farmacia</Text>
+        <Image style={styles.itemImager} source={require('../assets/Carrito.png')} />    
+        <Text style={styles.title}>Carrito de compras</Text>
+
+        <TouchableOpacity style={styles.item}>
+        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
+        <Text style={styles.itemText}>Descripcion</Text>
+        
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.item}>
         <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 1</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
+        <Text style={styles.itemText}>Descripcion</Text>
+        
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 2</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.paymentButton} onPress={() => navigation.navigate('PaymentU')}>
+        <Text style={styles.paymentButtonText}>Ir a pagar</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 3</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 4</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 5</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
+      
     </View>
-    <TouchableOpacity onPress={() => navigation.navigate('CarritoU')}>
-      <Image style={styles.bottomImage} source={require('../assets/Carrito.png')} />
-    </TouchableOpacity>
-  </View>
   );
 };
 
@@ -91,31 +76,31 @@ const styles = StyleSheet.create({
     marginBottom: 340,
   },
   title: {
-    fontSize: 40,
+    fontSize: 28,
     marginBottom: 20,
     left: 30,
   },
   item: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: -50,
+    marginBottom: -10,
   },
   itemImage: {
-    right: 150,
+    right: 120,
     top: 65,
-    width: 50,
-    height: 70,
+    width: 80,
+    height: 150,
   },
   itemImager: {
     resizeMode: 'center',
-    top: 90,
+    top: 80,
     width: 80,
     height: 130,
-    right: 140,
+    right: 150,
   },
   itemText: {
     marginLeft: 50,
-    fontSize: 32,
+    fontSize: 24,
   },
   itemSubtext: {
     marginLeft: 50,
@@ -131,6 +116,20 @@ const styles = StyleSheet.create({
     left: 15,
     zIndex: 1,
   },
+  paymentButton: {
+    backgroundColor: 'navy',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    marginBottom: 16,
+    top: 130,
+  },
+  paymentButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
 });
 
-export default FarmaScreenU;
+export default CarritoScreenU;

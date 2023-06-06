@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     paddingHorizontal: 20,
   },
   input: {
     width: '80%',
     height: 50,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#fff',
     marginBottom: 20,
     paddingHorizontal: 10,
     fontSize: 16,
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     marginBottom: 20,
+    
   },
 });
 

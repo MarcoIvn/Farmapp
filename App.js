@@ -12,6 +12,13 @@ import MainMenuScreenF from './screens/MainMenuScreenF.js';
 import FarmaScreenU from './screens/FarmaScreenU.js';
 import InvetarioScreenF from './screens/InvetarioScreenF.js';
 import PedidosScreenF from './screens/PedidosScreenF.js';
+import PedidosScreenU from './screens/PedidosScreenU.js';
+import AccountScreenU from './screens/AccountScreenU.js';
+import AccountScreenF from './screens/AccountScreenF.js';
+import CarritoScreenU from './screens/CarritoScreenU.js';
+import PaymentScreenU from './screens/PaymentScreenU.js';
+import StatusScreenU from './screens/StatusScreenU.js';
+import MoneyScreenU from './screens/MoneyScreenU.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +38,13 @@ const App = () => {
         <Stack.Screen name="FarmaU" component={FarmaScreenU} />
         <Stack.Screen name="InventarioF" component={InvetarioScreenF} />
         <Stack.Screen name="PedidosF" component={PedidosScreenF} />
+        <Stack.Screen name="PedidosU" component={PedidosScreenU} />
+        <Stack.Screen name="AccountU" component={AccountScreenU} />
+        <Stack.Screen name="AccountF" component={AccountScreenF} />
+        <Stack.Screen name="CarritoU" component={CarritoScreenU} />
+        <Stack.Screen name="PaymentU" component={PaymentScreenU} />
+        <Stack.Screen name="StatusU" component={StatusScreenU} />
+        <Stack.Screen name="MoneyU" component={MoneyScreenU} />
       </Stack.Navigator>
     </NavigationContainer>
   );

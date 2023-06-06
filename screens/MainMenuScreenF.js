@@ -4,7 +4,10 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 const MainMenuScreenU = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.topImage} source={require('../assets/User.png')} />
+      <TouchableOpacity onPress={() => navigation.navigate('AccountF')}>
+        <Image style={styles.topImage} source={require('../assets/User.png')} />
+      </TouchableOpacity>
+
 
       <View style={styles.logoContainer}>
         <Image style={styles.cornerImage} source={require('../assets/LogoF.png')} />
@@ -22,7 +25,7 @@ const MainMenuScreenU = ({ navigation }) => {
 
         <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('PedidosF')}>
           <Image style={styles.itemImage} source={require('../assets/Pedidos.png')} />
-          <Text style={styles.itemText}>Tus pedidos</Text>
+          <Text style={styles.itemText}>Tus envios</Text>
         </TouchableOpacity>
 
 
