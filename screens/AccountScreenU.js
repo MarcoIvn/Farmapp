@@ -1,11 +1,37 @@
-import React from 'react';
+import React, {useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import UserContext from '../UserContext';
 
 const AccountScreenU = ({ navigation }) => {
 
+  const { userData } = useContext(UserContext); // Obtener los datos del usuario del contexto
+  console.log("Contexto datos usuario: ", userData);
   const goToPedidos = () => {
     navigation.navigate('PedidosU');
   };
+  
+  // Función para calcular la edad actual
+const calcularEdad = (fechaNacimiento) => {
+  const fechaActual = new Date();
+  const añoActual = fechaActual.getFullYear();
+
+  const [añoNacimiento, mesNacimiento, diaNacimiento] = fechaNacimiento.split('-');
+  let edad = añoActual - parseInt(añoNacimiento);
+
+  // Verificar si la fecha actual aún no ha alcanzado el mes y día de nacimiento
+  if (
+    fechaActual.getMonth() < parseInt(mesNacimiento) - 1 ||
+    (fechaActual.getMonth() === parseInt(mesNacimiento) - 1 &&
+      fechaActual.getDate() < parseInt(diaNacimiento))
+  ) {
+    edad--;
+  }
+
+  return edad;
+};
+
+
+
 
   return (
     <View style={styles.container}>
@@ -22,11 +48,11 @@ const AccountScreenU = ({ navigation }) => {
         <View style={styles.tableContainer}>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Nombre:</Text>
-            <Text style={styles.tableValue}>John</Text>
+            <Text style={styles.tableValue}>{userData.nombres}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Apellidos:</Text>
-            <Text style={styles.tableValue}>Doe</Text>
+            <Text style={styles.tableValue}>{userData.apellidos}</Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('MoneyU')}>
             <View style={styles.tableRow}>
@@ -36,11 +62,11 @@ const AccountScreenU = ({ navigation }) => {
           </TouchableOpacity>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Dirección:</Text>
-            <Text style={styles.tableValue}>123 Main St</Text>
+            <Text style={styles.tableValue}>{userData.direccion}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Edad:</Text>
-            <Text style={styles.tableValue}>30</Text>
+            <Text style={styles.tableValue}>{calcularEdad(userData.fecha_nacimiento)}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Información de seguro:</Text>

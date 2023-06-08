@@ -1,15 +1,42 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Image } from 'react-native';
-
+import React, { useState, useContext } from 'react';
+import { View, TextInput, Button, StyleSheet, Image,Alert } from 'react-native';
+import UserContext from '../UserContext';
 
 const LoginScreenF = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const { setUserData } = useContext(UserContext);
   const handleLogin = () => {
-    // Aquí puedes agregar la lógica para manejar la autenticación del usuario
-    
-    navigation.navigate('MainMenuU');
+    fetch('http://20.127.17.215:3000/loginU', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error en la solicitud');
+        }
+      })
+      .then(data => {
+        // Procesar la respuesta del servidor
+        console.log('Respuesta del servidor:', data);
+        if (data.userData) {
+          setUserData(data.userData); // Almacenar los datos del usuario en el contexto IMPORTANTE
+          Alert.alert('Inicio de sesión exitoso');
+          navigation.navigate('MainMenuU');
+        } else {
+          console.error('Error al iniciar sesión:', data.error);
+          // Manejar el error de inicio de sesión
+        }
+      })
+      .catch(error => {
+        console.error('Error al iniciar sesión:', error);
+        Alert.alert('Error al iniciar sesión, Usuario o Contraseña no validos');
+      });
   };
 
   return (
