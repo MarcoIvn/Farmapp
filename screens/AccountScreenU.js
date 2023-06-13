@@ -13,25 +13,23 @@ const AccountScreenU = ({ navigation }) => {
   // Función para calcular la edad actual
 const calcularEdad = (fechaNacimiento) => {
   const fechaActual = new Date();
-  const añoActual = fechaActual.getFullYear();
+  const fechaNacimientoArray = fechaNacimiento.split('-');
+  const añoNacimiento = parseInt(fechaNacimientoArray[0]);
+  const mesNacimiento = parseInt(fechaNacimientoArray[1]);
+  const diaNacimiento = parseInt(fechaNacimientoArray[2]);
 
-  const [añoNacimiento, mesNacimiento, diaNacimiento] = fechaNacimiento.split('-');
-  let edad = añoActual - parseInt(añoNacimiento);
+  let edad = fechaActual.getFullYear() - añoNacimiento;
 
-  // Verificar si la fecha actual aún no ha alcanzado el mes y día de nacimiento
+  // Comparar el mes y día de nacimiento con la fecha actual
   if (
-    fechaActual.getMonth() < parseInt(mesNacimiento) - 1 ||
-    (fechaActual.getMonth() === parseInt(mesNacimiento) - 1 &&
-      fechaActual.getDate() < parseInt(diaNacimiento))
+    fechaActual.getMonth() < mesNacimiento - 1 ||
+    (fechaActual.getMonth() === mesNacimiento - 1 && fechaActual.getDate() < diaNacimiento)
   ) {
     edad--;
   }
 
   return edad;
 };
-
-
-
 
   return (
     <View style={styles.container}>

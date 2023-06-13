@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert } from 'react-native';
 
-
 const CountryCodeModal = ({ isVisible, onSelectCode }) => {
   const countryCodes = [
     { id: 1, code: '52', flag: '🇲🇽', country: 'México' },
@@ -52,7 +51,7 @@ const CountryCodeModal = ({ isVisible, onSelectCode }) => {
   );
 };
 
-const RegisterScreenU = () => {
+const RegisterScreenU = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [direccion, setDireccion] = useState('');
@@ -83,6 +82,7 @@ const RegisterScreenU = () => {
     const fechaCompleta = `${selectedYear}-${selectedMonth}-${selectedDay}`;
     const numeroCompleto = `+${codigoPais} ${numeroTelefono}`;
     const genero = `${selectedGender}`;
+
     console.log('Registrando usuario:', {
       email,
       password,
@@ -116,6 +116,7 @@ const RegisterScreenU = () => {
       // Procesar la respuesta del servidor
       console.log('Respuesta del servidor:', data);
       // Realizar las acciones necesarias después de guardar los datos
+      navigation.navigate('LoginU');
     })
     .catch(error => {
       console.error('Error al enviar los datos:', error);

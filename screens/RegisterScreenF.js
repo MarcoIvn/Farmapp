@@ -1,66 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert, } from 'react-native';
+import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert } from 'react-native';
 
-const CountryCodeModal = ({ isVisible, onSelectCode }) => {
-  const countryCodes = [
-    { id: 1, code: '52', flag: '🇲🇽', country: 'México' },
-    { id: 2, code: '1', flag: '🇺🇸', country: 'EE. UU.' },
-    { id: 3, code: '54', flag: '🇦🇷', country: 'Argentina' },
-    { id: 4, code: '56', flag: '🇨🇱', country: 'Chile' },
-    { id: 5, code: '57', flag: '🇨🇴', country: 'Colombia' }, 
-    { id: 6, code: '58', flag: '🇻🇪', country: 'Venezuela' },
-    { id: 7, code: '51', flag: '🇵🇪', country: 'Perú' },
-    { id: 8, code: '55', flag: '🇧🇷', country: 'Brasil' },
-    { id: 9, code: '593', flag: '🇪🇨', country: 'Ecuador' },
-    { id: 10, code: '502', flag: '🇬🇹', country: 'Guatemala' },
-    { id: 11, code: '503', flag: '🇸🇻', country: 'El Salvador' },
-    { id: 12, code: '505', flag: '🇳🇮', country: 'Nicaragua' },
-    { id: 13, code: '506', flag: '🇨🇷', country: 'Costa Rica' },
-    { id: 14, code: '507', flag: '🇵🇦', country: 'Panamá' },
-    { id: 15, code: '591', flag: '🇧🇴', country: 'Bolivia' },
-    { id: 16, code: '598', flag: '🇺🇾', country: 'Uruguay' },
-    { id: 17, code: '591', flag: '🇵🇾', country: 'Paraguay' },
-    { id: 18, code: '593', flag: '🇵🇦', country: 'Panamá' },
-    { id: 19, code: '57', flag: '🇵🇷', country: 'Puerto Rico' },
-    { id: 20, code: '34', flag: '🇪🇸', country: 'España' },
-    { id: 21, code: '33', flag: '🇫🇷', country: 'Francia' },
-    { id: 22, code: '49', flag: '🇩🇪', country: 'Alemania' },
-    { id: 23, code: '44', flag: '🇬🇧', country: 'Reino Unido' },
-    { id: 24, code: '39', flag: '🇮🇹', country: 'Italia' },
-    { id: 25, code: '31', flag: '🇳🇱', country: 'Países Bajos' },
-    { id: 26, code: '41', flag: '🇨🇭', country: 'Suiza' },
-    { id: 27, code: '46', flag: '🇸🇪', country: 'Suecia' },
-    { id: 28, code: '1', flag: '🇨🇦', country: 'Canadá' },
-    // Para agregar mas paises despues
-  ];
+// Primer formulario
+const FirstFormScreen = ({formData, onNext }) => {
 
-  return (
-    <Modal animationType="slide" transparent visible={isVisible}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
-          <ScrollView>
-            {countryCodes.map(country => (
-              <TouchableOpacity key={country.id} onPress={() => onSelectCode(country.code)}>
-                <Text style={{ fontSize: 20 }}>{country.flag} {country.country} (+{country.code})</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+  const CountryCodeModal = ({ isVisible, onSelectCode }) => {
+    const countryCodes = [
+      { id: 1, code: '52', flag: '🇲🇽', country: 'México' },
+      { id: 2, code: '1', flag: '🇺🇸', country: 'EE. UU.' },
+    ];
+  
+    return (
+      <Modal animationType="slide" transparent visible={isVisible}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
+            <ScrollView>
+              {countryCodes.map(country => (
+                <TouchableOpacity key={country.id} onPress={() => onSelectCode(country.code)}>
+                  <Text style={{ fontSize: 20 }}>{country.flag} {country.country} (+{country.code})</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </Modal>
-  );
-};
+      </Modal>
+    );
+  };
 
-const RegisterScreenU = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [direccion, setDireccion] = useState('');
-  const [nombres, setNombres] = useState('');
-  const [apellidos, setApellidos] = useState('');
-  //const [fechaNacimiento, setFechaNacimiento] = useState('');
-  const [codigoPais, setCodigoPais] = useState('');
-  const [numeroTelefono, setNumeroTelefono] = useState('');
-  //const [genero, setGenero] = useState('');
+
+  const [email, setEmail] = useState(formData?.email || '');
+  const [password, setPassword] = useState(formData?.password ||'');
+  const [direccion, setDireccion] = useState(formData?.direccion || '');
+  const [nombres, setNombres] = useState(formData?.nombres || '');
+  const [apellidos, setApellidos] = useState(formData?.apellidos || '');
+  const [fechaNacimiento, setFechaNacimiento] = useState(formData?.fechaNacimiento || '');
+  const [codigoPais, setCodigoPais] = useState(formData?.codigoPais || '');
+  const [numeroTelefono, setNumeroTelefono] = useState(formData?.numeroTelefono || '');
+  const [genero, setGenero] = useState(formData?.genero || '');
   const [isCountryModalVisible, setIsCountryModalVisible] = useState(false);
   const [isDayModalVisible, setIsDayModalVisible] = useState(false);
   const [isMonthModalVisible, setIsMonthModalVisible] = useState(false);
@@ -68,30 +44,24 @@ const RegisterScreenU = () => {
   const [selectedDay, setSelectedDay] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState(formData?.genero || '');
   const [isGenderModalVisible, setIsGenderModalVisible] = useState(false);
 
-  const handleRegister = () => {
-    if (!direccion || !nombres || !apellidos || !selectedDay || !selectedMonth || !selectedYear || !codigoPais || !numeroTelefono || !selectedGender || !email || !password) {
-      Alert.alert('Error', 'Por favor, complete todos los campos obligatorios.');
-      return;
-    }else if(password.length < 6){
-      Alert.alert('Error', 'La contraseña debe tener al menos 6 caracteres');
-      return;
+  const startYear = 1904;
+  const endYear = 2004;
+  let fechaCompleta = `${selectedYear}-${selectedMonth}-${selectedDay}`;
+  
+  let numeroCompleto = `+${codigoPais} ${numeroTelefono}`;
+  const handleNumeroTelefonoChange = (text) => {
+    // Validación de números de teléfono
+    if (/^\d*$/.test(text)) {
+      setNumeroTelefono(text);
     }
-    const fechaCompleta = `${selectedYear}-${selectedMonth}-${selectedDay}`;
-    const numeroCompleto = `+${codigoPais} ${numeroTelefono}`;
-    const genero = `${selectedGender}`;
-    console.log('Registrando usuario:', {
-      email,
-      password,
-      direccion,
-      nombres,
-      apellidos,
-      fechaCompleta,
-      numeroCompleto,
-      genero,
-    });
+  };
+
+  const handleSelectGender = (gender) => {
+    setSelectedGender(gender);
+    setIsGenderModalVisible(false);
   };
 
   const handleSelectDay = (day) => {
@@ -109,47 +79,28 @@ const RegisterScreenU = () => {
     setIsYearModalVisible(false);
   };
 
-  const handleSelectGender = (gender) => {
-    setSelectedGender(gender);
-    setIsGenderModalVisible(false);
-  };
-
-  const handleNumeroTelefonoChange = (text) => {
-    // Validación de números de teléfono
-    if (/^\d*$/.test(text)) {
-      setNumeroTelefono(text);
-    }
-  };
-
-  const startYear = 1904;
-  const endYear = 2004;
-
   return (
-    <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-    behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Registre sus Datos:</Text>
+    <View>
+    <Text>Ingrese sus datos:</Text>
       <TextInput
+        //style={styles.input}
         placeholder="Dirección de envío"
         value={direccion}
-        onChangeText={text => setDireccion(text)}
-        style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}
+        onChangeText={setDireccion}
       />
       <TextInput
         placeholder="Nombres"
         value={nombres}
-        onChangeText={text => setNombres(text)}
-        style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}
+        onChangeText={setNombres}
       />
       <TextInput
         placeholder="Apellidos"
         value={apellidos}
-        onChangeText={text => setApellidos(text)}
-        style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}
+        onChangeText={setApellidos}
       />
+     
 
-      <View style={{ flexDirection: 'row' }}>
+     <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity onPress={() => setIsDayModalVisible(true)}>
           <Text style={{ borderWidth: 1, padding: 10, width: 60, marginVertical: 10 }}>{selectedDay || 'Día'}</Text>
         </TouchableOpacity>
@@ -161,39 +112,7 @@ const RegisterScreenU = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={() => setIsCountryModalVisible(true)}>
-        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10 }}>{`+${codigoPais}`}</Text>
-      </TouchableOpacity>
-      <TextInput
-        placeholder="Número de teléfono"
-        keyboardType="numeric"
-        value={numeroTelefono}
-        onChangeText={handleNumeroTelefonoChange}
-        style={{ borderWidth: 1, padding: 10, width: 140, marginVertical: 10 }}
-      />
-      </View>
-      <CountryCodeModal isVisible={isCountryModalVisible} onSelectCode={code => { setCodigoPais(code); setIsCountryModalVisible(false); }} />
-      <TouchableOpacity onPress={() => setIsGenderModalVisible(true)}>
-        <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}>{selectedGender || 'Género'}</Text>
-      </TouchableOpacity>
-
-
-      <TextInput
-        placeholder="Correo electrónico"
-        value={email}
-        onChangeText={text => setEmail(text)}
-        style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}
-      />
-      <TextInput
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry
-        style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}
-      />
-
-      <Modal animationType="slide" transparent visible={isDayModalVisible}>
+     <Modal animationType="slide" transparent visible={isDayModalVisible}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
           <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
             <ScrollView>
@@ -253,7 +172,25 @@ const RegisterScreenU = () => {
           </View>
         </View>
       </Modal>
-      
+
+      <View style={{ flexDirection: 'row' }}>
+      <TouchableOpacity onPress={() => setIsCountryModalVisible(true)}>
+        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10 }}>{`+${codigoPais}`}</Text>
+      </TouchableOpacity>
+      <TextInput
+        placeholder="Número de teléfono"
+        keyboardType="numeric"
+        value={numeroTelefono}
+        onChangeText={handleNumeroTelefonoChange}
+        style={{ borderWidth: 1, padding: 10, width: 140, marginVertical: 10 }}
+      />
+      </View>
+      <CountryCodeModal isVisible={isCountryModalVisible} onSelectCode={code => { setCodigoPais(code); setIsCountryModalVisible(false); }} />
+
+      <TouchableOpacity onPress={() => setIsGenderModalVisible(true)}>
+        <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}>{selectedGender || 'Género'}</Text>
+      </TouchableOpacity>
+
       <Modal animationType="slide" transparent visible={isGenderModalVisible}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', height: 150 }}>
           <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
@@ -272,13 +209,313 @@ const RegisterScreenU = () => {
         </View>
       </Modal>
 
-      <Button title="Registrarse" onPress={handleRegister} />
+      <TextInput
+        placeholder="Correo electrónico"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="Contraseña"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+       <Button
+        title="Siguiente"
+        onPress={() => onNext({ email,password,direccion,nombres,apellidos,fechaCompleta,numeroCompleto,genero,})}
+      />
     </View>
-    </ScrollView>
-    </KeyboardAvoidingView>
+  )
+  
+};
+
+// Segundo formulario ///////////
+const SecondFormScreen = ({formData, onNext,onPrevious }) => {
+  const [banco, setBanco] = useState(formData?.banco || '');
+  const [noCuenta, setNoCuenta] = useState(formData?.noCuenta || '');
+  const [titularCuenta, setTitularCuenta] = useState(formData?.titularCuenta || '');
+  const [noReferencia, setNoReferencia] = useState(formData?.noReferencia || '');
+  const [clabe, setClabe] = useState(formData?.clabe || '');
+
+  return (
+    <View>
+    <Text>Datos bancarios:</Text>
+      <TextInput
+        placeholder="Banco"
+        value={banco}
+        onChangeText={text => setBanco(text)}
+      />
+      <TextInput
+        placeholder="No Cuenta Bancaria (11-16 dígitos)"
+        value={noCuenta}
+        onChangeText={text => setNoCuenta(text)}
+        keyboardType="numeric"
+        maxLength={16}
+      />
+      <TextInput
+        placeholder="Titular de la Cuenta"
+        value={titularCuenta}
+        onChangeText={text => setTitularCuenta(text)}
+      />
+      <TextInput
+        placeholder="No Referencia Bancaria"
+        value={noReferencia}
+        onChangeText={text => setNoReferencia(text)}
+        keyboardType="numeric"
+      />
+      <TextInput
+        placeholder="Clabe (18 dígitos)"
+        value={clabe}
+        onChangeText={text => setClabe(text)}
+        keyboardType="numeric"
+        maxLength={18}
+      />
+      <Button
+        title="Siguiente"
+        onPress={() => onNext({ banco,noCuenta,titularCuenta,noReferencia,clabe })}
+      />
+      <Button
+        title="Regresar"
+        onPress={onPrevious}
+      />
+    </View>
   );
 };
 
+// Última pantalla de registro /////////////
+const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
+  
+  const CountryCodeModalF = ({ isVisible, onSelectCodeF }) => {
+    const countryCodesF = [
+      { id: 1, code: '52', flag: '🇲🇽', country: 'México' },
+      { id: 2, code: '1', flag: '🇺🇸', country: 'EE. UU.' },
+    ];
+  
+    return (
+      <Modal animationType="slide" transparent visible={isVisible}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
+            <ScrollView>
+              {countryCodesF.map(country => (
+                <TouchableOpacity key={country.id} onPress={() => onSelectCodeF(country.code)}>
+                  <Text style={{ fontSize: 20 }}>{country.flag} {country.country} (+{country.code})</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  const [nombreF, setNombreF] = useState(formData?.nombreF || '');
+  const [calle, setCalle] = useState(formData?.calle || '');
+  const [ciudad, setCiudad] = useState(formData?.ciudad || '');
+  const [estado, setEstado] = useState(formData?.estado || '');
+  const [codigoPostal, setCodigoPostal] = useState(formData?.codigoPostal || '');
+  const [numeroTelefonoF, setNumeroTelefonoF] = useState(formData?.numeroTelefono || '');
+  const [emailF, setEmailF] = useState(formData?.emailF || '');
+  const [rfc, setRFC] = useState(formData?.rfc || '');
+  const [isCountryModalFVisible, setIsCountryModalFVisible] = useState(false);
+  const [codigoPaisF, setCodigoPaisF] = useState(formData?.codigoPaisF || '');
+  let numeroCompletoF = `+${codigoPaisF} ${numeroTelefonoF}`;
+  const handleNumeroTelefonoFChange = (text) => {
+    // Validación de números de teléfono
+    if (/^\d*$/.test(text)) {
+      setNumeroTelefonoF(text);
+    }
+  };
+  const handleRegister = () => {
+    const completeFormData = { ...formData, nombreF,calle,ciudad,estado,codigoPostal,numeroCompletoF,emailF,rfc};
+    console.log(completeFormData);
+    
+    //onRegister(completeFormData);
+    // Envia los datos al servidor backend
+    fetch('http://20.127.17.215:3000/registerBIF', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(completeFormData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Procesar la respuesta del servidor
+      console.log('Respuesta del servidor:', data);
+      // Realizar las acciones necesarias después de guardar los datos
+
+      //navigation.navigate('LoginU');
+    })
+    .catch(error => {
+      console.error('Error al enviar los datos:', error);
+      // Manejar el error de envío de datos
+    });
+
+    fetch('http://20.127.17.215:3000/registerFarm', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(completeFormData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Procesar la respuesta del servidor
+      console.log('Respuesta del servidor:', data);
+      // Realizar las acciones necesarias después de guardar los datos
+
+      //navigation.navigate('LoginU');
+    })
+    .catch(error => {
+      console.error('Error al enviar los datos:', error);
+      // Manejar el error de envío de datos
+    });
+
+    fetch('http://20.127.17.215:3000/registerF', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(completeFormData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Procesar la respuesta del servidor
+      console.log('Respuesta del servidor:', data);
+      // Realizar las acciones necesarias después de guardar los datos
+
+      //navigation.navigate('LoginU');
+    })
+    .catch(error => {
+      console.error('Error al enviar los datos:', error);
+      // Manejar el error de envío de datos
+    });
+  };
+
+  return (
+    <View>
+      <Text>Farmacia a registrar:</Text>
+      <TextInput
+        placeholder="Nombre"
+        value={nombreF}
+        onChangeText={setNombreF}
+      />
+      <TextInput
+        placeholder="Calle"
+        value={calle}
+        onChangeText={setCalle}
+      />
+      <TextInput
+        placeholder="Ciudad"
+        value={ciudad}
+        onChangeText={setCiudad}
+      />
+      <TextInput
+        placeholder="Estado"
+        value={estado}
+        onChangeText={setEstado}
+      />
+      <TextInput
+        placeholder="Código Postal"
+        value={codigoPostal}
+        onChangeText={setCodigoPostal}
+      />
+
+      <View style={{ flexDirection: 'row' }}>
+      <TouchableOpacity onPress={() => setIsCountryModalFVisible(true)}>
+        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10 }}>{`+${codigoPaisF}`}</Text>
+      </TouchableOpacity>
+      <TextInput
+        placeholder="Número de teléfono"
+        keyboardType="numeric"
+        value={numeroTelefonoF}
+        onChangeText={handleNumeroTelefonoFChange}
+        style={{ borderWidth: 1, padding: 10, width: 140, marginVertical: 10 }}
+      />
+      </View>
+      <CountryCodeModalF isVisible={isCountryModalFVisible} onSelectCodeF={code => { setCodigoPaisF(code); setIsCountryModalFVisible(false); }} />
+
+      <TextInput
+        placeholder="Email"
+        value={emailF}
+        onChangeText={setEmailF}
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="RFC"
+        value={rfc}
+        onChangeText={setRFC}
+        maxLength={13}
+      />
+
+      <Button
+        title="Registrar"
+        onPress={handleRegister}
+      />
+      <Button
+        title="Regresar"
+        onPress={onPrevious}
+      />
+    </View>
+  );
+};
+
+const RegisterScreenF = ({ navigation }) => {
+  const [currentScreen, setCurrentScreen] = useState(1);
+  const [formData, setFormData] = useState({});
+
+  const handleFirstFormNext = (data) => {
+    setFormData((prevData) => ({ ...prevData, ...data }));
+    setCurrentScreen(2);
+  };
+
+  const handleSecondFormNext = (data) => {
+    setFormData((prevData) => ({ ...prevData, ...data }));
+    setCurrentScreen(3);
+  };
+
+  const handlePreviousScreen = () => {
+    setCurrentScreen((prevScreen) => prevScreen - 1);
+  };
+
+  const handleRegister = (completeFormData) => {
+    // Aquí puedes enviar los datos al servidor o realizar cualquier acción necesaria
+    console.log(completeFormData);
+  };
+
+  let content;
+  if (currentScreen === 1) {
+    content = (
+      <FirstFormScreen formData={formData} onNext={handleFirstFormNext} />
+    );
+  } else if (currentScreen === 2) {
+    content = (
+      <SecondFormScreen
+        formData={formData}
+        onNext={handleSecondFormNext}
+        onPrevious={handlePreviousScreen}
+      />
+    );
+  } else {
+    content = (
+      <ThirdFormScreen
+        formData={formData}
+        onRegister={handleRegister}
+        onPrevious={handlePreviousScreen}
+      />
+    );
+  }
+
+  return (
+    <View>
+      {content}
+    </View>
+  );
+};
+
+export default RegisterScreenF;
 
 
-export default RegisterScreenU;
+
+

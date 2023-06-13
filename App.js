@@ -34,7 +34,7 @@ const App = () => {
           <Stack.Screen name="LoginU" component={LoginScreenU} />
           <Stack.Screen name="RegistroU" component={RegistroScreenU} />
           <Stack.Screen name="LoginF" component={LoginScreenF} />
-          <Stack.Screen name="RegistroF" component={RegistroScreenF} />
+          <Stack.Screen name="RegistroF" component={RegistroScreenF} options={{ headerShown: false }} />
           <Stack.Screen name="MainMenuU" component={MainMenuScreenU} />
           <Stack.Screen name="MainMenuF" component={MainMenuScreenF} />
           <Stack.Screen name="FarmaU" component={FarmaScreenU} />
@@ -47,6 +47,7 @@ const App = () => {
           <Stack.Screen name="PaymentU" component={PaymentScreenU} />
           <Stack.Screen name="StatusU" component={StatusScreenU} />
           <Stack.Screen name="MoneyU" component={MoneyScreenU} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
