@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert, Platform } from 'react-native';
 
 // Primer formulario
 const FirstFormScreen = ({formData, onNext }) => {
@@ -80,153 +80,165 @@ const FirstFormScreen = ({formData, onNext }) => {
   };
 
   return (
-    <View>
-    <Text>Ingrese sus datos:</Text>
-      <TextInput
-        //style={styles.input}
-        placeholder="Dirección de envío"
-        value={direccion}
-        onChangeText={setDireccion}
-      />
-      <TextInput
-        placeholder="Nombres"
-        value={nombres}
-        onChangeText={setNombres}
-      />
-      <TextInput
-        placeholder="Apellidos"
-        value={apellidos}
-        onChangeText={setApellidos}
-      />
-     
-
-     <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity onPress={() => setIsDayModalVisible(true)}>
-          <Text style={{ borderWidth: 1, padding: 10, width: 60, marginVertical: 10 }}>{selectedDay || 'Día'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setIsMonthModalVisible(true)}>
-          <Text style={{ borderWidth: 1, padding: 10, width: 60, marginVertical: 10 }}>{selectedMonth || 'Mes'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setIsYearModalVisible(true)}>
-          <Text style={{ borderWidth: 1, padding: 10, width: 80, marginVertical: 10 }}>{selectedYear || 'Año'}</Text>
-        </TouchableOpacity>
-      </View>
-
-     <Modal animationType="slide" transparent visible={isDayModalVisible}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
-            <ScrollView>
-              {Array.from({ length: 31 }, (_, index) => (
-                <TouchableOpacity key={index + 1} onPress={() => handleSelectDay(index + 1)}>
-                  <Text style={{ fontSize: 20 }}>{index + 1}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-        </View>
-      </Modal>
-
-
-      <Modal animationType="slide" transparent visible={isMonthModalVisible}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
-            <ScrollView>
-              {[
-                'Enero',
-                'Febrero',
-                'Marzo',
-                'Abril',
-                'Mayo',
-                'Junio',
-                'Julio',
-                'Agosto',
-                'Septiembre',
-                'Octubre',
-                'Noviembre',
-                'Diciembre',
-              ].map((month, index) => {
-                const monthNumber = (index + 1).toString().padStart(2, '0');
-                return (
-                  <TouchableOpacity key={index + 1} onPress={() => handleSelectMonth(monthNumber)}>
-                    <Text style={{ fontSize: 20 }}>{month}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-          </View>
-        </View>
-      </Modal>
-
+    <KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={{}}
+  >
+      <View style={{ backgroundColor: '#CEE3F6', padding: 40, paddingBottom: 1000 }}>
+      <Text style={{ fontSize:24 , marginBottom: 40,top:20,fontWeight: 'bold' }}>Ingrese sus datos:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Dirección de envío"
+          value={direccion}
+          onChangeText={setDireccion}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Nombres"
+          value={nombres}
+          onChangeText={setNombres}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Apellidos"
+          value={apellidos}
+          onChangeText={setApellidos}
+        />
       
 
-      <Modal animationType="slide" transparent visible={isYearModalVisible}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
-            <ScrollView>
-              {Array.from({ length: endYear - startYear + 1 }, (_, index) => (
-                <TouchableOpacity key={index + startYear} onPress={() => handleSelectYear(startYear + index)}>
-                  <Text style={{ fontSize: 20 }}>{startYear + index}</Text>
+      <View style={styles.dateRow}>
+          <TouchableOpacity onPress={() => setIsDayModalVisible(true)}>
+            <Text style={styles.dateInput}>{selectedDay || 'Día'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsMonthModalVisible(true)}>
+            <Text style={styles.dateInput}>{selectedMonth || 'Mes'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsYearModalVisible(true)}>
+            <Text style={styles.dateInput}>{selectedYear || 'Año'}</Text>
+          </TouchableOpacity>
+        </View>
+
+      <Modal animationType="slide" transparent visible={isDayModalVisible}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
+              <ScrollView>
+                {Array.from({ length: 31 }, (_, index) => (
+                  <TouchableOpacity key={index + 1} onPress={() => handleSelectDay(index + 1)}>
+                    <Text style={{ fontSize: 20 }}>{index + 1}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+
+
+        <Modal animationType="slide" transparent visible={isMonthModalVisible}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
+              <ScrollView>
+                {[
+                  'Enero',
+                  'Febrero',
+                  'Marzo',
+                  'Abril',
+                  'Mayo',
+                  'Junio',
+                  'Julio',
+                  'Agosto',
+                  'Septiembre',
+                  'Octubre',
+                  'Noviembre',
+                  'Diciembre',
+                ].map((month, index) => {
+                  const monthNumber = (index + 1).toString().padStart(2, '0');
+                  return (
+                    <TouchableOpacity key={index + 1} onPress={() => handleSelectMonth(monthNumber)}>
+                      <Text style={{ fontSize: 20 }}>{month}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+
+        
+
+        <Modal animationType="slide" transparent visible={isYearModalVisible}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10, maxHeight: 300 }}>
+              <ScrollView>
+                {Array.from({ length: endYear - startYear + 1 }, (_, index) => (
+                  <TouchableOpacity key={index + startYear} onPress={() => handleSelectYear(startYear + index)}>
+                    <Text style={{ fontSize: 20 }}>{startYear + index}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity onPress={() => setIsCountryModalVisible(true)}>
+          <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10,borderColor: '#2E9AFE' }}>{`+${codigoPais}`}</Text>
+        </TouchableOpacity>
+        <TextInput
+        
+          placeholder="Número de teléfono"
+          keyboardType="numeric"
+          value={numeroTelefono}
+          onChangeText={handleNumeroTelefonoChange}
+          style={{ borderWidth: 1, padding: 10, width: 150, marginVertical: 10,borderColor: '#2E9AFE',}}
+        />
+        </View>
+        <CountryCodeModal isVisible={isCountryModalVisible} onSelectCode={code => { setCodigoPais(code); setIsCountryModalVisible(false); }} />
+
+        <TouchableOpacity onPress={() => setIsGenderModalVisible(true)}>
+          <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10,borderColor: '#2E9AFE' }}>{selectedGender || 'Género'}</Text>
+        </TouchableOpacity>
+
+        <Modal animationType="slide" transparent visible={isGenderModalVisible}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', height: 150 }}>
+            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+              <ScrollView style={{ maxHeight: 120 }}>
+                <TouchableOpacity onPress={() => handleSelectGender('Masculino')}>
+                  <Text style={{ fontSize: 20, marginBottom: 10 }}>Masculino</Text>
                 </TouchableOpacity>
-              ))}
-            </ScrollView>
+                <TouchableOpacity onPress={() => handleSelectGender('Femenino')}>
+                  <Text style={{ fontSize: 20, marginBottom: 10 }}>Femenino</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleSelectGender('Prefiero no decirlo')}>
+                  <Text style={{ fontSize: 20, marginBottom: 10 }}>Prefiero no decirlo</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
 
-      <View style={{ flexDirection: 'row' }}>
-      <TouchableOpacity onPress={() => setIsCountryModalVisible(true)}>
-        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10 }}>{`+${codigoPais}`}</Text>
-      </TouchableOpacity>
-      <TextInput
-        placeholder="Número de teléfono"
-        keyboardType="numeric"
-        value={numeroTelefono}
-        onChangeText={handleNumeroTelefonoChange}
-        style={{ borderWidth: 1, padding: 10, width: 140, marginVertical: 10 }}
-      />
+        <TextInput
+          style={styles.input}
+          
+          placeholder="Correo electrónico"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <Button
+
+          title="Siguiente"
+          onPress={() => onNext({ email,password,direccion,nombres,apellidos,fechaCompleta,numeroCompleto,genero,})}
+        />
       </View>
-      <CountryCodeModal isVisible={isCountryModalVisible} onSelectCode={code => { setCodigoPais(code); setIsCountryModalVisible(false); }} />
-
-      <TouchableOpacity onPress={() => setIsGenderModalVisible(true)}>
-        <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10 }}>{selectedGender || 'Género'}</Text>
-      </TouchableOpacity>
-
-      <Modal animationType="slide" transparent visible={isGenderModalVisible}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', height: 150 }}>
-          <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-            <ScrollView style={{ maxHeight: 120 }}>
-              <TouchableOpacity onPress={() => handleSelectGender('Masculino')}>
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Masculino</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleSelectGender('Femenino')}>
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Femenino</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleSelectGender('Prefiero no decirlo')}>
-                <Text style={{ fontSize: 20, marginBottom: 10 }}>Prefiero no decirlo</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-        </View>
-      </Modal>
-
-      <TextInput
-        placeholder="Correo electrónico"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-       <Button
-        title="Siguiente"
-        onPress={() => onNext({ email,password,direccion,nombres,apellidos,fechaCompleta,numeroCompleto,genero,})}
-      />
-    </View>
-  )
+    </KeyboardAvoidingView>
+    )
   
 };
 
@@ -239,14 +251,16 @@ const SecondFormScreen = ({formData, onNext,onPrevious }) => {
   const [clabe, setClabe] = useState(formData?.clabe || '');
 
   return (
-    <View>
-    <Text>Datos bancarios:</Text>
+    <View style={{ backgroundColor: '#CEE3F6', padding: 40, paddingBottom: 1000 }}>
+    <Text style={{ fontSize:24 , marginBottom: 40,top:20,fontWeight: 'bold' }}>Datos bancarios:</Text>
       <TextInput
+        style={styles.input}
         placeholder="Banco"
         value={banco}
         onChangeText={text => setBanco(text)}
       />
       <TextInput
+        style={styles.input}
         placeholder="No Cuenta Bancaria (11-16 dígitos)"
         value={noCuenta}
         onChangeText={text => setNoCuenta(text)}
@@ -254,17 +268,20 @@ const SecondFormScreen = ({formData, onNext,onPrevious }) => {
         maxLength={16}
       />
       <TextInput
+        style={styles.input}
         placeholder="Titular de la Cuenta"
         value={titularCuenta}
         onChangeText={text => setTitularCuenta(text)}
       />
       <TextInput
+        style={styles.input}
         placeholder="No Referencia Bancaria"
         value={noReferencia}
         onChangeText={text => setNoReferencia(text)}
         keyboardType="numeric"
       />
       <TextInput
+        style={styles.input}
         placeholder="Clabe (18 dígitos)"
         value={clabe}
         onChangeText={text => setClabe(text)}
@@ -385,7 +402,7 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
       console.log('Respuesta del servidor:', data);
       // Realizar las acciones necesarias después de guardar los datos
 
-      //navigation.navigate('LoginU');
+      //navigation.navigate('InicioF');
     })
     .catch(error => {
       console.error('Error al enviar los datos:', error);
@@ -394,29 +411,34 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
   };
 
   return (
-    <View>
-      <Text>Farmacia a registrar:</Text>
+    <View style={{ backgroundColor: '#CEE3F6', padding: 40, paddingBottom: 1000 }}>
+    <Text style={{ fontSize:24 , marginBottom: 40,top:20,fontWeight: 'bold' }}>Farmacia a registrar:</Text>
       <TextInput
-        placeholder="Nombre"
+        style={styles.input}
+        placeholder="Nombre de Farmacia"
         value={nombreF}
         onChangeText={setNombreF}
       />
       <TextInput
-        placeholder="Calle"
+        style={styles.input}
+        placeholder="Calle y número"
         value={calle}
         onChangeText={setCalle}
       />
       <TextInput
+        style={styles.input}
         placeholder="Ciudad"
         value={ciudad}
         onChangeText={setCiudad}
       />
       <TextInput
+        style={styles.input}
         placeholder="Estado"
         value={estado}
         onChangeText={setEstado}
       />
       <TextInput
+        style={styles.input}
         placeholder="Código Postal"
         value={codigoPostal}
         onChangeText={setCodigoPostal}
@@ -424,25 +446,27 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
 
       <View style={{ flexDirection: 'row' }}>
       <TouchableOpacity onPress={() => setIsCountryModalFVisible(true)}>
-        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10 }}>{`+${codigoPaisF}`}</Text>
+        <Text style={{ borderWidth: 1, padding: 15 ,width: 60, marginVertical: 10,borderColor: '#2E9AFE' }}>{`+${codigoPaisF}`}</Text>
       </TouchableOpacity>
       <TextInput
         placeholder="Número de teléfono"
         keyboardType="numeric"
         value={numeroTelefonoF}
         onChangeText={handleNumeroTelefonoFChange}
-        style={{ borderWidth: 1, padding: 10, width: 140, marginVertical: 10 }}
+        style={{ borderWidth: 1, padding: 10, width: 150, marginVertical: 10 ,borderColor: '#2E9AFE'}}
       />
       </View>
       <CountryCodeModalF isVisible={isCountryModalFVisible} onSelectCodeF={code => { setCodigoPaisF(code); setIsCountryModalFVisible(false); }} />
 
       <TextInput
+        style={styles.input}
         placeholder="Email"
         value={emailF}
         onChangeText={setEmailF}
         keyboardType="email-address"
       />
       <TextInput
+        style={styles.input}
         placeholder="RFC"
         value={rfc}
         onChangeText={setRFC}
@@ -450,8 +474,10 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
       />
 
       <Button
+
         title="Registrar"
         onPress={handleRegister}
+        
       />
       <Button
         title="Regresar"
@@ -460,7 +486,32 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
     </View>
   );
 };
+const styles = {
+  input: {
+    borderWidth: 1,
+    borderColor: '#2E9AFE',
+    padding: 10,
+    marginBottom: 10,
+    height: 60,
+    
+  },
+  dateRow: {
+    flexDirection: 'row',
+    marginBottom: 10,
 
+    
+  },
+  dateInput: {
+    borderWidth: 1,
+    borderColor: '#2E9AFE',
+    padding: 10,
+    width: 102,
+    height: 40,
+    
+    marginHorizontal: 5,
+  },
+  // Add more styles as needed
+}
 const RegisterScreenF = ({ navigation }) => {
   const [currentScreen, setCurrentScreen] = useState(1);
   const [formData, setFormData] = useState({});
@@ -512,6 +563,7 @@ const RegisterScreenF = ({ navigation }) => {
       {content}
     </View>
   );
+
 };
 
 export default RegisterScreenF;
