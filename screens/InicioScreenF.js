@@ -7,11 +7,11 @@ const PlanFScreen = ({ navigation }) => {
       <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
       <Text style={styles.title}>¡CONOCE NUESTRO PLAN Y ÚNETE!</Text>
       <Text style={styles.subtitle}>Crece tu negocio con pedidos y entregas a domicilio</Text>
-      <Text style={styles.price}>700$ MENSUALES</Text>
+      <Text style={styles.price}>COBRO POR COMISION</Text>
 
       <Text style={styles.feature}>* TU FARMACIA EN UNA APLICACIÓN</Text>
       <Text style={styles.feature}>* PAGOS DIGITALES PARA TUS CLIENTES</Text>
-      <Text style={styles.feature}>* SOLO PREOCÚPATE POR TENER LOS PEDIDOS EN LA PUERTA</Text>
+      <Text style={styles.feature}>* SOLO PREOCÚPATE POR TENER TU INVENTARIO LLENO</Text>
       
       <TouchableOpacity
         style={styles.button}
