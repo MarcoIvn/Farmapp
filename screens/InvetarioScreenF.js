@@ -1,5 +1,13 @@
-import React, {useContext, useState, useEffect} from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image,TextInput,FlatList } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  TextInput,
+  FlatList,
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { decode } from 'base64-arraybuffer';
 import { extname } from 'path';
@@ -7,7 +15,6 @@ import { extname } from 'path';
 import UserContext from '../UserContext';
 
 const InvetarioScreenF = ({ navigation }) => {
-
   const { userData } = useContext(UserContext); // Obtener los datos del usuario del contexto
   console.log("Contexto datos usuario: ", userData);
   const [farmaciaData, setFarmaciaData] = useState(null);
@@ -16,34 +23,34 @@ const InvetarioScreenF = ({ navigation }) => {
   const [productos, setProductos] = useState([]);
 
   // Función para obtener la extensión del archivo
-function getExtension(filename) {
-  return extname(filename).slice(1);
-}
-
-const seleccionarImagen = async () => {
-  try {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      console.log('Permiso de acceso a la galería denegado');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      const { uri } = result;
-      setProductoData({ ...productoData, imagenUrl: uri }); // Cambiar imagen a imagenUrl
-    }
-  } catch (error) {
-    console.error('Error al seleccionar la imagen:', error);
+  function getExtension(filename) {
+    return extname(filename).slice(1);
   }
-};
-  
+
+  const seleccionarImagen = async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permiso de acceso a la galería denegado');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.cancelled) {
+        const { uri } = result;
+        setProductoData({ ...productoData, imagenUrl: uri }); // Cambiar imagen a imagenUrl
+      }
+    } catch (error) {
+      console.error('Error al seleccionar la imagen:', error);
+    }
+  };
+
   const [productoData, setProductoData] = useState({
     nombre: '',
     imagenUrl: null,
@@ -52,14 +59,14 @@ const seleccionarImagen = async () => {
   });
 
   const obtenerDatosFarmacia = async () => {
-  try {
-    const response = await fetch(`http://20.127.17.215:3000/getFarmacia?propietarioId=${userData.id}`);
-    const data = await response.json();
-    setFarmaciaData(data[0]);
-    obtenerProductos(data[0].id); // Obtener los productos de la farmacia
-  } catch (error) {
-    console.error('Error al obtener los datos de la farmacia:', error);
-  }
+    try {
+      const response = await fetch(`http://20.127.17.215:3000/getFarmacia?propietarioId=${userData.id}`);
+      const data = await response.json();
+      setFarmaciaData(data[0]);
+      obtenerProductos(data[0].id); // Obtener los productos de la farmacia
+    } catch (error) {
+      console.error('Error al obtener los datos de la farmacia:', error);
+    }
   };
 
   const obtenerProductos = async (idFarmacia) => {
@@ -71,7 +78,6 @@ const seleccionarImagen = async () => {
       console.error('Error al obtener los productos:', error);
     }
   };
-
 
   useEffect(() => {
     obtenerDatosFarmacia();
@@ -105,7 +111,6 @@ const seleccionarImagen = async () => {
       console.error('Error al registrar el producto:', error);
     }
   };
-  
 
   const toggleMostrarFormulario = () => {
     setMostrarFormulario(!mostrarFormulario);
@@ -115,89 +120,81 @@ const seleccionarImagen = async () => {
   if (!farmaciaData) {
     return <Text>Cargando datos de la farmacia...</Text>;
   }
-  if(mostrarFormulario){
+  if (mostrarFormulario) {
     return (
       <View style={styles.container}>
-      <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
-      <Text style={styles.title}>Inventario</Text>
-  
-      <TouchableOpacity
-        style={styles.button}
-        onPress={toggleMostrarFormulario}
-      >
-        <Text style={styles.buttonText}>{botonTexto}</Text>
-      </TouchableOpacity>
-  
-      {mostrarFormulario && (
-        <View>
-          <Text style={styles.subtitle}>Registrar Producto:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre"
-            value={productoData.nombre}
-            onChangeText={(text) => handleInputChange('nombre', text)}
-          />
-          <TouchableOpacity style={styles.input} onPress={seleccionarImagen}>
-            {imagenUri ? (
-              <Image source={{ uri: imagenUri }} style={styles.imagenPreview} />
-            ) : (
-              <Text style={styles.inputPlaceholder}>Seleccionar imagen</Text>
-            )}
-          </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            placeholder="Precio"
-            value={productoData.precio}
-            keyboardType="numeric"
-            onChangeText={(text) => handleInputChange('precio', text)}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Proveedor"
-            value={productoData.proveedor}
-            onChangeText={(text) => handleInputChange('proveedor', text)}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleRegistrarProducto}
-          >
-            <Text style={styles.buttonText}>Registrar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+        <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
+        <Text style={styles.title}>Inventario</Text>
+
+        <TouchableOpacity style={styles.button} onPress={toggleMostrarFormulario}>
+          <Text style={styles.buttonText}>{botonTexto}</Text>
+        </TouchableOpacity>
+
+        {mostrarFormulario && (
+          <View>
+            <Text style={styles.subtitle}>Registrar Producto:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Nombre"
+              value={productoData.nombre}
+              onChangeText={(text) => handleInputChange('nombre', text)}
+            />
+            <TouchableOpacity style={styles.input} onPress={seleccionarImagen}>
+              {imagenUri ? (
+                <Image source={{ uri: imagenUri }} style={styles.imagenPreview} />
+              ) : (
+                <Text style={styles.inputPlaceholder}>Seleccionar imagen</Text>
+              )}
+            </TouchableOpacity>
+            <View style={styles.row}>
+              <TextInput
+                style={[styles.input, styles.halfInput]}
+                placeholder="Precio"
+                value={productoData.precio}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange('precio', text)}
+              />
+              <TextInput
+                style={[styles.input, styles.halfInput]}
+                placeholder="Proveedor"
+                value={productoData.proveedor}
+                onChangeText={(text) => handleInputChange('proveedor', text)}
+              />
+            </View>
+            <TouchableOpacity style={styles.button} onPress={handleRegistrarProducto}>
+              <Text style={styles.buttonText}>Registrar</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     );
   }
-  
 
   return (
     <View style={styles.container}>
       <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
       <Text style={styles.title}>Inventario</Text>
       <FlatList
-  data={productos}
-  keyExtractor={(item) => item.id.toString()}
-  renderItem={({ item }) => (
-    <View style={styles.productoContainer}>
-      {item.imagen && (
-        <Image
-          source={{ uri: item.imagen }} // Utilizar la URL de la imagen
-          style={styles.productoImagen}
-        />
-      )}
-      <Text style={styles.productoNombre}>{item.nombre}</Text>
-      <Text style={styles.productoPrecio}>Precio: ${item.precio}</Text>
-      <Text style={styles.productoProveedor}>Proveedor: {item.proveedor}</Text>
-    </View>
-  )}
-/>
+        data={productos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.productoContainer}>
+            {item.imagen && (
+              <Image source={{ uri: item.imagen }} style={styles.productoImagen} />
+            )}
+            <Image style={styles.topImage} source={require('../assets/Producto.png')} />
+            <Text style={styles.productoNombre}>{item.nombre}</Text>
+            <Text style={styles.productoPrecio}>Precio: ${item.precio}</Text>
+            <Text style={styles.productoProveedor}>Proveedor: {item.proveedor}</Text>
+          </View>
+        )}
+      />
       <TouchableOpacity style={styles.button} onPress={() => setMostrarFormulario(true)}>
         <Text style={styles.buttonText}>Registrar Producto</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -213,25 +210,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
+    top:15
   },
   subtitle: {
     fontSize: 16,
     color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
-  },
-  price: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  feature: {
-    fontSize: 16,
-    color: '#fff',
-    marginBottom: 10,
-    textAlign: 'justify',
   },
   button: {
     width: '80%',
@@ -247,16 +232,11 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight: 'bold',
   },
-  memberText: {
-    fontSize: 16,
-    color: '#fff',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
   logoImage: {
     width: 100,
     height: 100,
     marginBottom: 20,
+    top:35
   },
   input: {
     width: '100%',
@@ -275,6 +255,50 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     resizeMode: 'contain',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  halfInput: {
+    width: '48%',
+  },
+  productoContainer: {
+    marginBottom: 20,
+  },
+  productoImagen: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+    resizeMode: 'cover',
+    borderRadius: 10,
+  },
+  productoNombre: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  productoPrecio: {
+    fontSize: 14,
+    color: '#fff',
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+  productoProveedor: {
+    fontSize: 14,
+    color: '#fff',
+    textAlign: 'center',
+  },
+  topImage: {
+    width: '100%',
+    height: 80,
+    resizeMode: 'center',
+    position: 'absolute',
+    top: 5,
+    zIndex: 1,
+
   },
 });
 
