@@ -1,7 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Button, FlatList } from 'react-native';
 
-const CarritoScreenU = ({ navigation }) => {
+const CarritoScreenU = ({ navigation, route }) => {
+  const { carrito } = route.params;
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity style={styles.item}>
+      <Image style={styles.itemImage} source={{ uri: item.imagen }} />
+      <Text style={styles.itemText}>{item.nombre}</Text>
+      {/* Resto del contenido */}
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
@@ -15,27 +25,23 @@ const CarritoScreenU = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={styles.contentContainer}>
-        <Image style={styles.itemImager} source={require('../assets/Carrito.png')} />    
+        <Image style={styles.itemImager} source={require('../assets/Carrito.png')} />
         <Text style={styles.title}>Carrito de compras</Text>
 
-        <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Descripcion</Text>
-        
-      </TouchableOpacity>
+        <FlatList
+          data={carrito}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          contentContainerStyle={{ flexGrow: 1 }}
+        />
 
-      <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Descripcion</Text>
-        
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.paymentButton} onPress={() => navigation.navigate('PaymentU')}>
-        <Text style={styles.paymentButtonText}>Ir a pagar</Text>
+        <TouchableOpacity
+          style={styles.paymentButton}
+          onPress={() => navigation.navigate('PaymentU', { numProductos: carrito.length })}
+        >
+          <Text style={styles.paymentButtonText}>Ir a pagar</Text>
         </TouchableOpacity>
       </View>
-
-      
     </View>
   );
 };
@@ -72,8 +78,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 100,
-    marginBottom: 340,
+    marginTop: 10,
+    marginBottom: 200,
+    
   },
   title: {
     fontSize: 28,

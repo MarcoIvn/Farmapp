@@ -2,7 +2,8 @@ import React,{ useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Button } from 'react-native';
 import Modal from 'react-native-modal';
 
-const PaymentScreenU = ({ navigation }) => {
+const PaymentScreenU = ({ navigation,route }) => {
+  const { numProductos } = route.params;
     const [isModalVisible, setModalVisible] = useState(false);
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -30,7 +31,7 @@ const PaymentScreenU = ({ navigation }) => {
                 <Text style={styles.cellTitle}>Resumen de Pago</Text>
               </View>
               <View style={styles.row}>
-                <Text style={styles.cellTitle}>Num. Productos: X</Text>
+              <Text style={styles.cellTitle}>Num. Productos: {numProductos}</Text>
               </View>
               <View style={styles.row}>
                 <Text style={styles.cellTitle}>Total: $$</Text>

@@ -1,12 +1,13 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const FarmaScreenU = ({ navigation , route}) => {
-
+const FarmaScreenU = ({ navigation, route }) => {
   const { farmaciaId } = route.params;
   const { farmaciaNombre } = route.params;
   console.log(farmaciaId)
   const [productos, setProductos] = useState([]);
+  const [carrito, setCarrito] = useState([]);
+
   useEffect(() => {
     obtenerProductos();
   }, []);
@@ -21,6 +22,11 @@ const FarmaScreenU = ({ navigation , route}) => {
     }
   };
 
+  const agregarAlCarrito = (index) => {
+    const productoSeleccionado = productos[index];
+    setCarrito([...carrito, productoSeleccionado]);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
@@ -33,29 +39,28 @@ const FarmaScreenU = ({ navigation , route}) => {
         </View>
       </TouchableOpacity>
 
-
       <View style={styles.contentContainer}>
-      <Image style={styles.itemImager} source={require('../assets/farmacia1.png')} />    
-      <Text style={styles.title}>{farmaciaNombre}</Text>
-      {productos.map((producto) => (
-        <View key={producto.id}>
-        <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={{ uri: producto.imagen }} />
-          <Text style={styles.itemText}>{producto.nombre}</Text>
-          <Text style={styles.itemSubtext}>Descripcion</Text>
-          {/* Mas campos */}
-          </TouchableOpacity> 
-        </View>
-      ))}
+        <Image style={styles.itemImager} source={require('../assets/farmacia1.png')} />
+        <Text style={styles.title}>{farmaciaNombre}</Text>
 
+        {productos.map((producto, index) => (
+          <View key={producto.id}>
+            <TouchableOpacity style={styles.item} onPress={() => agregarAlCarrito(index)}>
+              <Image style={styles.itemImage} source={{ uri: producto.imagen }} />
+              <Text style={styles.itemText}>{producto.nombre}</Text>
+              <Text style={styles.itemSubtext}>Descripcion</Text>
+              {/* Mas campos */}
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+
+      <TouchableOpacity onPress={() => navigation.navigate('CarritoU', { carrito, route: route })}>
+        <Image style={styles.bottomImage} source={require('../assets/Carrito.png')} />
+      </TouchableOpacity>
     </View>
-    <TouchableOpacity onPress={() => navigation.navigate('CarritoU')}>
-      <Image style={styles.bottomImage} source={require('../assets/Carrito.png')} />
-    </TouchableOpacity>
-  </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
