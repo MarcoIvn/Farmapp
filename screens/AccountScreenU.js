@@ -1,11 +1,38 @@
-import React, {useContext } from 'react';
+import React, {useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import UserContext from '../UserContext';
 
 const AccountScreenU = ({ navigation }) => {
 
+  const [bankInfo, setBankInfo] = useState(null);
   const { userData } = useContext(UserContext); // Obtener los datos del usuario del contexto
   console.log("Contexto datos usuario: ", userData);
+  useEffect(() => {
+    if (userData.id_infobancaria !== null) {
+      fetch(`http://20.127.17.215:3000/getUserBankInfo/${userData.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.bankInfo) {
+            setBankInfo(data.bankInfo);
+          }
+        })
+        .catch((error) => {
+          console.error('Error al obtener la información del banco:', error);
+        });
+    }
+  }, [userData.id_infobancaria, userData.id]);
+
+
+  const renderMetodosPago = () => {
+    if (userData.id_infobancaria === null) {
+      return <Text style={styles.tableValue}>Sin métodos de pago</Text>;
+    } else if (bankInfo) {
+      return <Text style={styles.tableValue}>{bankInfo.banco}</Text>;
+    } else {
+      return <Text style={styles.tableValue}>Cargando información del banco...</Text>;
+    }
+  }
+
   const goToPedidos = () => {
     navigation.navigate('PedidosU');
   };
@@ -31,6 +58,8 @@ const calcularEdad = (fechaNacimiento) => {
   return edad;
 };
 
+
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('MainMenuU')}>
@@ -55,7 +84,7 @@ const calcularEdad = (fechaNacimiento) => {
           <TouchableOpacity onPress={() => navigation.navigate('MoneyU')}>
             <View style={styles.tableRow}>
               <Text style={styles.tableLabel}>Métodos de pago:</Text>
-              <Text style={styles.tableValue}>Visa, Mastercard</Text>
+              {renderMetodosPago()}
             </View>
           </TouchableOpacity>
           <View style={styles.tableRow}>
