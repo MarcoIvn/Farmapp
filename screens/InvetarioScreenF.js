@@ -172,6 +172,7 @@ const InvetarioScreenF = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+    
       <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
       <Text style={styles.title}>Inventario</Text>
       <FlatList

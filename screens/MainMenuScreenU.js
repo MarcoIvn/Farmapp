@@ -20,7 +20,15 @@ const MainMenuScreenU = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Resto del código... */}
+      <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
+        <Image style={styles.topImage} source={require('../assets/User.png')} />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('MainMenuU')}>
+        <View style={styles.logoContainer}>
+          <Image style={styles.cornerImage} source={require('../assets/LogoF.png')} />
+        </View>
+      </TouchableOpacity>
       <View style={styles.contentContainer}>
         <Image style={styles.itemImager} source={require('../assets/Ubicacion.png')} />
         <Text style={styles.title}>Farmacias cerca de mí</Text>
