@@ -5,7 +5,7 @@ const InicioScreenU = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/LogoF.png')} style={styles.logoImage} />
-      <Text style={styles.logo}>Farmappp</Text>
+      <Text style={styles.logo}>Farmapp</Text>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#fff' }]}
         onPress={() => navigation.navigate('LoginU')}

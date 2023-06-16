@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const MainMenuScreenU = ({ navigation }) => {
+
+  const [farmacias, setFarmacias] = useState([]);
+  useEffect(() => {
+    obtenerFarmacias();
+  }, []);
+
+  const obtenerFarmacias = async () => {
+    try {
+      const response = await fetch('http://20.127.17.215:3000/getFarmacias');
+      const data = await response.json();
+      setFarmacias(data);
+    } catch (error) {
+      console.error('Error al obtener las farmacias:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
-        <Image style={styles.topImage} source={require('../assets/User.png')} />
-      </TouchableOpacity>
-
-      <View style={styles.logoContainer}>
-        <Image style={styles.cornerImage} source={require('../assets/LogoF.png')} />
-      </View>
-
+      {/* Resto del código... */}
       <View style={styles.contentContainer}>
-        <Image style={styles.itemImager} source={require('../assets/Ubicacion.png')} />    
+        <Image style={styles.itemImager} source={require('../assets/Ubicacion.png')} />
         <Text style={styles.title}>Farmacias cerca de mí</Text>
 
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('FarmaU')}>
-          <Image style={styles.itemImage} source={require('../assets/farmacia1.png')} />
-          <Text style={styles.itemText}>Farmacia 1</Text>
-          <Text style={styles.itemSubtext}>Tiempo de espera: 10 minutos</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('FarmaU')}>
-          <Image style={styles.itemImage} source={require('../assets/farmacia1.png')} />
-          <Text style={styles.itemText}>Farmacia 2</Text>
-          <Text style={styles.itemSubtext}>Tiempo de espera: 15 minutos</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('FarmaU')}>
-          <Image style={styles.itemImage} source={require('../assets/farmacia1.png')} />
-          <Text style={styles.itemText}>Farmacia 3</Text>
-          <Text style={styles.itemSubtext}>Tiempo de espera: 20 minutos</Text>
-        </TouchableOpacity>
+        {farmacias.map((farmacia) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => navigation.navigate('FarmaU', { farmaciaId: farmacia.id, farmaciaNombre: farmacia.nombre })}
+            key={farmacia.id}
+          >
+            {/* Aquí puedes utilizar los campos de la farmacia para mostrar la información */}
+            <Image style={styles.itemImage} source={require('../assets/farmacia1.png')} />
+            <Text style={styles.itemText}>{farmacia.nombre}</Text>
+            <Text style={styles.itemSubtext}>Tiempo de espera: 10 minutos</Text>
+          </TouchableOpacity>
+          
+        ))}
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('CarritoU')}>
       <Image style={styles.bottomImage} source={require('../assets/Carrito.png')} />

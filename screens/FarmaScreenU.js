@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState }  from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
-const FarmaScreenU = ({ navigation }) => {
+const FarmaScreenU = ({ navigation , route}) => {
+
+  const { farmaciaId } = route.params;
+  const { farmaciaNombre } = route.params;
+  console.log(farmaciaId)
+  const [productos, setProductos] = useState([]);
+  useEffect(() => {
+    obtenerProductos();
+  }, []);
+
+  const obtenerProductos = async () => {
+    try {
+      const response = await fetch(`http://20.127.17.215:3000/getProductos?idFarmacia=${farmaciaId}`);
+      const data = await response.json();
+      setProductos(data);
+    } catch (error) {
+      console.error('Error al obtener los productos:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('AccountU')}>
@@ -17,36 +36,18 @@ const FarmaScreenU = ({ navigation }) => {
 
       <View style={styles.contentContainer}>
       <Image style={styles.itemImager} source={require('../assets/farmacia1.png')} />    
-      <Text style={styles.title}>Farmacia</Text>
+      <Text style={styles.title}>{farmaciaNombre}</Text>
+      {productos.map((producto) => (
+        <View key={producto.id}>
+        <TouchableOpacity style={styles.item}>
+        <Image style={styles.itemImage} source={{ uri: producto.imagen }} />
+          <Text style={styles.itemText}>{producto.nombre}</Text>
+          <Text style={styles.itemSubtext}>Descripcion</Text>
+          {/* Mas campos */}
+          </TouchableOpacity> 
+        </View>
+      ))}
 
-      <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 1</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item}>
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 2</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 3</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 4</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.item} >
-        <Image style={styles.itemImage} source={require('../assets/Producto.png')} />
-        <Text style={styles.itemText}>Producto 5</Text>
-        <Text style={styles.itemSubtext}>Descripcion</Text>
-      </TouchableOpacity>
     </View>
     <TouchableOpacity onPress={() => navigation.navigate('CarritoU')}>
       <Image style={styles.bottomImage} source={require('../assets/Carrito.png')} />

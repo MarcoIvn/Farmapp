@@ -182,7 +182,6 @@ const InvetarioScreenF = ({ navigation }) => {
             {item.imagen && (
               <Image source={{ uri: item.imagen }} style={styles.productoImagen} />
             )}
-            <Image style={styles.topImage} source={require('../assets/Producto.png')} />
             <Text style={styles.productoNombre}>{item.nombre}</Text>
             <Text style={styles.productoPrecio}>Precio: ${item.precio}</Text>
             <Text style={styles.productoProveedor}>Proveedor: {item.proveedor}</Text>
