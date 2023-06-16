@@ -29,24 +29,24 @@ const App = () => {
     <UserContext.Provider value={{ userData, setUserData }}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="InicioU" component={InicioScreenU} />
-          <Stack.Screen name="InicioF" component={InicioScreenF} />
-          <Stack.Screen name="LoginU" component={LoginScreenU} />
-          <Stack.Screen name="RegistroU" component={RegistroScreenU} />
-          <Stack.Screen name="LoginF" component={LoginScreenF} />
+          <Stack.Screen name="InicioU" component={InicioScreenU} options={{ headerShown: false,gestureEnabled: false, }}/>
+          <Stack.Screen name="InicioF" component={InicioScreenF} options={{ headerShown: false, gestureEnabled: false,}}/>
+          <Stack.Screen name="LoginU" component={LoginScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="RegistroU" component={RegistroScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="LoginF" component={LoginScreenF} options={{ headerShown: false }}/>
           <Stack.Screen name="RegistroF" component={RegistroScreenF} options={{ headerShown: false }} />
-          <Stack.Screen name="MainMenuU" component={MainMenuScreenU} />
-          <Stack.Screen name="MainMenuF" component={MainMenuScreenF} />
-          <Stack.Screen name="FarmaU" component={FarmaScreenU} />
-          <Stack.Screen name="InventarioF" component={InvetarioScreenF} />
-          <Stack.Screen name="PedidosF" component={PedidosScreenF} />
-          <Stack.Screen name="PedidosU" component={PedidosScreenU} />
-          <Stack.Screen name="AccountU" component={AccountScreenU} />
-          <Stack.Screen name="AccountF" component={AccountScreenF} />
-          <Stack.Screen name="CarritoU" component={CarritoScreenU} />
-          <Stack.Screen name="PaymentU" component={PaymentScreenU} />
-          <Stack.Screen name="StatusU" component={StatusScreenU} />
-          <Stack.Screen name="MoneyU" component={MoneyScreenU} />
+          <Stack.Screen name="MainMenuU" component={MainMenuScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="MainMenuF" component={MainMenuScreenF} options={{ headerShown: false }}/>
+          <Stack.Screen name="FarmaU" component={FarmaScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="InventarioF" component={InvetarioScreenF} options={{ headerShown: false }}/>
+          <Stack.Screen name="PedidosF" component={PedidosScreenF} options={{ headerShown: false }}/>
+          <Stack.Screen name="PedidosU" component={PedidosScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="AccountU" component={AccountScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="AccountF" component={AccountScreenF} options={{ headerShown: false }}/>
+          <Stack.Screen name="CarritoU" component={CarritoScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="PaymentU" component={PaymentScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="StatusU" component={StatusScreenU} options={{ headerShown: false }}/>
+          <Stack.Screen name="MoneyU" component={MoneyScreenU} options={{ headerShown: false }}/>
 
         </Stack.Navigator>
       </NavigationContainer>

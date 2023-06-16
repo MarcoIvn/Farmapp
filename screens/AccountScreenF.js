@@ -1,9 +1,30 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import UserContext from '../UserContext';
 
 const AccountScreenU = ({ navigation }) => {
 
+  const { userData } = useContext(UserContext); // Obtener los datos del usuario del contexto
+  console.log("Contexto datos usuario: ", userData);
+  const [farmaciaData, setFarmaciaData] = useState(null);
 
+  const obtenerDatosFarmacia = async () => {
+  try {
+    const response = await fetch(`http://20.127.17.215:3000/getFarmacia?propietarioId=${userData.id}`);
+    const data = await response.json();
+    setFarmaciaData(data[0]);
+  } catch (error) {
+    console.error('Error al obtener los datos de la farmacia:', error);
+  }
+};
+useEffect(() => {
+  obtenerDatosFarmacia();
+}, [userData.id]);
+
+if (!farmaciaData) {
+  return <Text>Cargando datos de la farmacia...</Text>;
+}
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('MainMenuF')}>
@@ -19,20 +40,20 @@ const AccountScreenU = ({ navigation }) => {
         <View style={styles.tableContainer}>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Farmacia:</Text>
-            <Text style={styles.tableValue}>Don manolo</Text>
+            <Text style={styles.tableValue}>{farmaciaData.nombre}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Dueño</Text>
-            <Text style={styles.tableValue}>Jose</Text>
+            <Text style={styles.tableValue}>{userData.nombres} {userData.apellidos}</Text>
           </View>
 
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Dirección:</Text>
-            <Text style={styles.tableValue}>123 Main St</Text>
+            <Text style={styles.tableValue}>{userData.direccion}</Text>
           </View>
           <View style={styles.tableRow}>
             <Text style={styles.tableLabel}>Rango:</Text>
-            <Text style={styles.tableValue}>Oro</Text>
+            <Text style={styles.tableValue}>{farmaciaData.rango ? farmaciaData.rango : 'Sin rango'}</Text>
           </View>
 
         </View>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Modal, TouchableOpacity, ScrollView,KeyboardAvoidingView, Alert, Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // Primer formulario
 const FirstFormScreen = ({formData, onNext }) => {
@@ -44,14 +45,36 @@ const FirstFormScreen = ({formData, onNext }) => {
   const [selectedDay, setSelectedDay] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
-  const [selectedGender, setSelectedGender] = useState(formData?.genero || '');
   const [isGenderModalVisible, setIsGenderModalVisible] = useState(false);
+
+  const fechaCompleta = `${selectedYear}-${selectedMonth}-${selectedDay}`;
+  const numeroCompleto = `+${codigoPais} ${numeroTelefono}`;
+
+
+
+  const validateForm = () => {
+    if (
+      email.trim() === '' ||
+      password.trim() === '' ||
+      direccion.trim() === '' ||
+      nombres.trim() === '' ||
+      apellidos.trim() === '' ||
+      selectedDay.trim() === '' ||
+      selectedMonth.trim() === '' ||
+      selectedYear.trim() === '' ||
+      codigoPais.trim() === '' ||
+      numeroTelefono.trim() === '' ||
+      genero.trim() === ''
+    ) {
+      return false; // Algún campo obligatorio está vacío
+    }
+    return true; // Todos los campos obligatorios están llenos
+  };
+
 
   const startYear = 1904;
   const endYear = 2004;
-  let fechaCompleta = `${selectedYear}-${selectedMonth}-${selectedDay}`;
   
-  let numeroCompleto = `+${codigoPais} ${numeroTelefono}`;
   const handleNumeroTelefonoChange = (text) => {
     // Validación de números de teléfono
     if (/^\d*$/.test(text)) {
@@ -60,7 +83,7 @@ const FirstFormScreen = ({formData, onNext }) => {
   };
 
   const handleSelectGender = (gender) => {
-    setSelectedGender(gender);
+    setGenero(gender);
     setIsGenderModalVisible(false);
   };
 
@@ -195,7 +218,7 @@ const FirstFormScreen = ({formData, onNext }) => {
         <CountryCodeModal isVisible={isCountryModalVisible} onSelectCode={code => { setCodigoPais(code); setIsCountryModalVisible(false); }} />
 
         <TouchableOpacity onPress={() => setIsGenderModalVisible(true)}>
-          <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10,borderColor: '#2E9AFE' }}>{selectedGender || 'Género'}</Text>
+          <Text style={{ borderWidth: 1, padding: 10, width: 200, marginVertical: 10,borderColor: '#2E9AFE' }}>{genero || 'Género'}</Text>
         </TouchableOpacity>
 
         <Modal animationType="slide" transparent visible={isGenderModalVisible}>
@@ -234,7 +257,16 @@ const FirstFormScreen = ({formData, onNext }) => {
         <Button
 
           title="Siguiente"
-          onPress={() => onNext({ email,password,direccion,nombres,apellidos,fechaCompleta,numeroCompleto,genero,})}
+          onPress={() => onNext({
+                email,
+                password,
+                direccion,
+                nombres,
+                apellidos,
+                fechaCompleta,
+                numeroCompleto,
+                genero,
+              })}
         />
       </View>
     </KeyboardAvoidingView>
@@ -244,11 +276,14 @@ const FirstFormScreen = ({formData, onNext }) => {
 
 // Segundo formulario ///////////
 const SecondFormScreen = ({formData, onNext,onPrevious }) => {
+
   const [banco, setBanco] = useState(formData?.banco || '');
   const [noCuenta, setNoCuenta] = useState(formData?.noCuenta || '');
   const [titularCuenta, setTitularCuenta] = useState(formData?.titularCuenta || '');
   const [noReferencia, setNoReferencia] = useState(formData?.noReferencia || '');
   const [clabe, setClabe] = useState(formData?.clabe || '');
+
+  
 
   return (
     <View style={{ backgroundColor: '#CEE3F6', padding: 40, paddingBottom: 1000 }}>
@@ -301,7 +336,9 @@ const SecondFormScreen = ({formData, onNext,onPrevious }) => {
 };
 
 // Última pantalla de registro /////////////
-const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
+const ThirdFormScreen = ({ formData,onPrevious, onRegister}) => {
+  
+  const navigation = useNavigation();
   
   const CountryCodeModalF = ({ isVisible, onSelectCodeF }) => {
     const countryCodesF = [
@@ -336,7 +373,9 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
   const [rfc, setRFC] = useState(formData?.rfc || '');
   const [isCountryModalFVisible, setIsCountryModalFVisible] = useState(false);
   const [codigoPaisF, setCodigoPaisF] = useState(formData?.codigoPaisF || '');
+  
   let numeroCompletoF = `+${codigoPaisF} ${numeroTelefonoF}`;
+
   const handleNumeroTelefonoFChange = (text) => {
     // Validación de números de teléfono
     if (/^\d*$/.test(text)) {
@@ -344,51 +383,13 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
     }
   };
   const handleRegister = () => {
+
     const completeFormData = { ...formData, nombreF,calle,ciudad,estado,codigoPostal,numeroCompletoF,emailF,rfc};
     console.log(completeFormData);
     
+    
     //onRegister(completeFormData);
     // Envia los datos al servidor backend
-    fetch('http://20.127.17.215:3000/registerBIF', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(completeFormData),
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Procesar la respuesta del servidor
-      console.log('Respuesta del servidor:', data);
-      // Realizar las acciones necesarias después de guardar los datos
-
-      //navigation.navigate('LoginU');
-    })
-    .catch(error => {
-      console.error('Error al enviar los datos:', error);
-      // Manejar el error de envío de datos
-    });
-
-    fetch('http://20.127.17.215:3000/registerFarm', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(completeFormData),
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Procesar la respuesta del servidor
-      console.log('Respuesta del servidor:', data);
-      // Realizar las acciones necesarias después de guardar los datos
-
-      //navigation.navigate('LoginU');
-    })
-    .catch(error => {
-      console.error('Error al enviar los datos:', error);
-      // Manejar el error de envío de datos
-    });
-
     fetch('http://20.127.17.215:3000/registerF', {
     method: 'POST',
     headers: {
@@ -402,7 +403,7 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
       console.log('Respuesta del servidor:', data);
       // Realizar las acciones necesarias después de guardar los datos
 
-      //navigation.navigate('InicioF');
+      navigation.navigate('LoginF', { fromRegistrationF: true });
     })
     .catch(error => {
       console.error('Error al enviar los datos:', error);
@@ -441,6 +442,7 @@ const ThirdFormScreen = ({ formData,onPrevious, onRegister }) => {
         style={styles.input}
         placeholder="Código Postal"
         value={codigoPostal}
+        keyboardType="numeric"
         onChangeText={setCodigoPostal}
       />
 
@@ -512,7 +514,7 @@ const styles = {
   },
   // Add more styles as needed
 }
-const RegisterScreenF = ({ navigation }) => {
+const RegisterScreenF = ({}) => {
   const [currentScreen, setCurrentScreen] = useState(1);
   const [formData, setFormData] = useState({});
 
@@ -538,7 +540,9 @@ const RegisterScreenF = ({ navigation }) => {
   let content;
   if (currentScreen === 1) {
     content = (
-      <FirstFormScreen formData={formData} onNext={handleFirstFormNext} />
+      <FirstFormScreen 
+        formData={formData} 
+        onNext={handleFirstFormNext} />
     );
   } else if (currentScreen === 2) {
     content = (

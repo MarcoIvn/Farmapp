@@ -116,7 +116,7 @@ const RegisterScreenU = ({ navigation }) => {
       // Procesar la respuesta del servidor
       console.log('Respuesta del servidor:', data);
       // Realizar las acciones necesarias después de guardar los datos
-      navigation.navigate('LoginU');
+      navigation.navigate('LoginU', { fromRegistrationU: true });
     })
     .catch(error => {
       console.error('Error al enviar los datos:', error);

@@ -1,8 +1,16 @@
-import React, { useState, useContext } from 'react';
-import { View, TextInput, Button, StyleSheet, Image,Alert } from 'react-native';
+import React, { useState, useContext, useEffect} from 'react';
+import { View, TextInput, Button, StyleSheet, Image,Alert} from 'react-native';
 import UserContext from '../UserContext';
 
-const LoginScreenF = ({ navigation }) => {
+const LoginScreenU = ({ navigation , route}) => {
+  useEffect(() => {
+    if (route.params?.fromRegistrationU) {
+      // Navegar a la pantalla de inicio
+      navigation.navigate('InicioU');
+    }
+  }, [route.params]);
+  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUserData } = useContext(UserContext);
@@ -47,6 +55,7 @@ const LoginScreenF = ({ navigation }) => {
         placeholder="Correo electrónico"
         value={email}
         onChangeText={text => setEmail(text)}
+        keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
@@ -84,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreenF;
+export default LoginScreenU;
